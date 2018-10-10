@@ -1,0 +1,1 @@
+scp -r ../build root@fozg.net:/home/fozg.net/tomato

@@ -7,10 +7,10 @@ export default ({
   taskName,
   subTasks,
   isSeleted,
-  continueThisTask
+  continueThisTask,
 }) => {
   let tstop;
-  let diff = moment(timeStop).diff(moment(), 'seconds');
+  let diff = moment(timeStop).diff(moment(), 'milliseconds');
   tstop = diff > 0 ? null : timeStop;
   
 
@@ -53,7 +53,7 @@ export default ({
                 <ul style={{listStyle: 'square'}}>
                   {subTasks.map((sub, idx) => (
                     <li key={idx}>
-                      <div> {sub.taskName} </div>
+                      <div style={{textDecoration: sub.isDone ? 'line-through' : 'none'}}> {sub.taskName} </div>
                     </li>
                   ))}
                 </ul>

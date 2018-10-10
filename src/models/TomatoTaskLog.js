@@ -24,7 +24,6 @@ export default class TomatoTaskLog {
     let ttl = this.toObject();
     
     delete ttl.id;
-    delete ttl.timeStop;
     delete ttl.userId;
   
     let res = await _fetchPOST(API.TOMATO_WORK_LOG, ttl )
@@ -38,6 +37,7 @@ export default class TomatoTaskLog {
   }
 
   async stop () {    
+    this.timeStop = new Date();
     let res = await _fetchPUT(API.TOMATO_WORK_LOG, {id: this.id, timeStop: this.timeStop});
     
     this.timeStop = res.timeStop;

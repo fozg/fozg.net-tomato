@@ -13,6 +13,11 @@ export default class SubTomatoTasksInput extends React.Component {
    *    updated: DateTime
    *  }]
    */
+
+  componentDidMount () {
+    this.input.focus();
+  }
+
   state = {
     subTasks: this.props.defaultValue || [],
     newTaskInput: ''
@@ -84,6 +89,7 @@ export default class SubTomatoTasksInput extends React.Component {
                 placeholder="Enter new Sub task"
                 value={this.state.newTaskInput}
                 onChange={e => { this.setState({ newTaskInput: e.target.value }) }}
+                innerRef={comp => this.input = comp}
               />
             </form>
           </div>

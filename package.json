@@ -22,5 +22,6 @@
       "target": "http://localhost:3301/api",
       "timeout": 5000
     }
-  }
+  },
+  "homepage": "https://fozg.net/tomato"
 }

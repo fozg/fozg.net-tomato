@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 
 import UserProvider from './context/UserProvider';
+import TomatoProvider from './context/TomatoProvider';
 
 let uri = new window.URL(window.location);
 if (uri.searchParams.get('token') !== null) {
@@ -15,7 +16,9 @@ if (uri.searchParams.get('token') !== null) {
 
 ReactDOM.render(
   <UserProvider>
-    <App />
+    <TomatoProvider>
+      <App />
+    </TomatoProvider>
   </UserProvider>, 
   document.getElementById('root')
 );
