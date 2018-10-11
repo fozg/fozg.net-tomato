@@ -10,14 +10,15 @@ export default class Navigation extends React.Component {
       <div
         style={{background: '#343a40', height: '100%'}}
       >
-         <div style={{padding: 10, fontWeight: 600, color: '#fff'}}>
-            TomatoTime
+         <div style={{padding: 10, fontWeight: 600, color: '#fff', textAlign: 'center', background: 'rgba(0,0,0,.4)'}}>
+            <img src='favicon.png' alt="TomatoWorks" width="50px" />
+            TomatoWorks
           </div>
         <div>
-          <Link className="active">My Tomato</Link>
+          <Link className="active">🍅My Tomato</Link>
         </div>
         <div>
-          <Link>Projects</Link>
+          <Link>📚Projects</Link>
         </div>
       </div>
     )

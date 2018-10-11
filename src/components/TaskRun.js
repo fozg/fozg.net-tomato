@@ -35,7 +35,7 @@ export default class TaskRun extends React.Component {
       
       this.props.onDistanceChange(distance/ (minutesToRun * 60000) * 100);
       this.setState({minutes, seconds});
-      document.title = `(${minutes}:${seconds}) Tomato WorkLog`
+      document.title = `(${minutes}:${seconds}) TomatoWorks`
       // this.setState({minutes: duration.minutes(), seconds: duration.seconds()})
     }, 500)
   }
@@ -43,13 +43,13 @@ export default class TaskRun extends React.Component {
   onRunOutofTime = () => {
     this.props.onRunOutofTime && 
     this.props.onRunOutofTime();
-    document.title = `(Stoped) Tomato WorkLog`
+    document.title = `(Stoped) TomatoWorks`
   }
 
   stopRun = () => {
     clearInterval(this.loop);
     this.setState({minutes: minutesToRun, seconds: 0});
-    document.title = `Tomato WorkLog`
+    document.title = `TomatoWorks`
   }
 
   render () {

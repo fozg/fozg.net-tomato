@@ -6,9 +6,10 @@ import {Default_Seconds_To_Run} from '../CONST';
 import api from '../api';
 
 import TomatoTaskLog from '../models/TomatoTaskLog';
+var Sound = require('react-sound').default;
 
 export default class UserProvider extends React.Component {
-  state = tomato;
+  state = {...tomato, soundStatus: Sound.status.STOPPED};
  
   componentDidMount () {
     api.getTomatoTasksLog().then(res => {
@@ -34,7 +35,7 @@ export default class UserProvider extends React.Component {
   }
 
   _updateTaskRunning = ({taskName, subTasks}) => {
-    let runningTomato = this.state.taskRunning;    
+    let runningTomato = this.state.taskRunning;
     if (taskName !== undefined) {
       if (taskName === '') {
         if (!this.state.isRunning) {
@@ -48,8 +49,10 @@ export default class UserProvider extends React.Component {
     };
 
     if (subTasks !== undefined) runningTomato.subTasks = subTasks;  
-    this.setState({taskRunning: runningTomato})
-    this.delayUpdateToServer();
+    this.setState({taskRunning: runningTomato, soundStatus: Sound.status.STOPPED})
+    if (this.state.isRunning) { 
+      this.delayUpdateToServer();
+    }
   }
 
   /**
@@ -74,19 +77,28 @@ export default class UserProvider extends React.Component {
     this.state.taskRunning.timeStart = new Date();
     this.state.taskRunning.timeStop = moment().add(Default_Seconds_To_Run, 'seconds')
     
+    
     this.state.taskRunning.save().then(() => {
       this.startTimmer();
       this.setState({taskRunning: this.state.taskRunning})
     })
   }
   
-  startTimmer = (secondsToRun = Default_Seconds_To_Run) => {
+  startTimmer = () => {
+    let stopTime = moment(this.state.taskRunning.timeStop);
+    let secondsToRun = moment(stopTime).diff(moment(), 'seconds');
+
     if (secondsToRun < 0) {
       clearTimeout(this.loop);
       this.setState({isRunning: false});
       // do something Run out of time
+      this.playSound();
       this.setState({tasksList: [this.state.taskRunning, ...this.state.tasksList]}, () => {
-        this.setState({taskRunning: new TomatoTaskLog({taskName: ''})})
+        this.setState({
+          taskRunning: new TomatoTaskLog({taskName: ''}),
+          secondsRemain: Default_Seconds_To_Run
+        });
+        document.title = `TomatoWorks`;
       })
       return;
     }
@@ -94,11 +106,13 @@ export default class UserProvider extends React.Component {
     this.loop = setTimeout(() => {
       this.setState({secondsRemain: secondsToRun});
       this.startTimmer(secondsToRun - 1);
-    }, 1000)
+      document.title = `(${`0${Math.floor(secondsToRun/60)}`.slice(-2)}:${`0${secondsToRun%60}`.slice(-2)}) TomatoWorks`
+    }, 500)
   }
 
   stopTimmer = () => {
-    this.setState({isRunning: false})
+    this.setState({isRunning: false, secondsRemain: Default_Seconds_To_Run})
+    document.title = `TomatoWorks`;
     clearTimeout(this.loop);
   }
 
@@ -112,6 +126,14 @@ export default class UserProvider extends React.Component {
     this.stopTimmer();
   }
 
+  playSound = () => {
+    this.setState({soundStatus: Sound.status.PLAYING})
+    console.log('playing song: EmmE-Em-Toi-Dat-G-DuUyen.mp3')
+  }
+  stopSound = () => {
+    this.setState({soundStatus: Sound.status.STOPPED})
+  }
+
   render () {
    return (
       <TomatoContext.Provider
@@ -119,10 +141,20 @@ export default class UserProvider extends React.Component {
           ...this.state,
           startRun: this._startRun,
           stopRun: this._stopRun,
-          updateTaskRunning: this._updateTaskRunning
+          updateTaskRunning: this._updateTaskRunning,
+          playSound: this.playSound,
+          stopSound: this.stopSound
         }}
       >
         {this.props.children}
+        <Sound
+            url="mp3/ido.mp3"
+            playStatus={this.state.soundStatus}
+            playFromPosition={0 /* in milliseconds */}
+            // onLoading={this.handleSongLoading}
+            // onPlaying={this.handleSongPlaying}
+            // onFinishedPlaying={this.handleSongFinishedPlaying}
+          />
       </TomatoContext.Provider>
     )
   }

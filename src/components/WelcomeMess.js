@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 
 import UserContext from '../context/UserContext';
+import TomatoContext from '../context/TomatoContext';
 
 const Mess = ({name}) => {
   let hours = moment().hours();
@@ -35,7 +36,15 @@ export default class Welcome extends React.Component{
           </UserContext.Consumer>
         </div>
         <div className="col-sm-2" style={{textAlign: 'right'}}>
-          
+        
+          <TomatoContext.Consumer>
+            {({playSound, stopSound}) => (
+              <div>
+              <a onClick={playSound} href="#" style={{color: '#6d4ca2', fontWeight: 600}}>😜Play</a>
+              <a onClick={stopSound} href="#" style={{color: '#6d4ca2', fontWeight: 600}}>😶Stop</a>
+              </div>
+            )}
+          </TomatoContext.Consumer>
         </div>
       </div>
     )
