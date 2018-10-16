@@ -1,18 +1,25 @@
 import React from 'react';
-import TomatoContext, {tomato} from './TomatoContext';
+import TomatoContext, {tomato as tomatoInitialState} from './TomatoContext';
 import moment from 'moment';
 
 import {Default_Seconds_To_Run} from '../CONST';
 import api from '../api';
+import {notifyMe} from '../helper';
 
 import TomatoTaskLog from '../models/TomatoTaskLog';
 var Sound = require('react-sound').default;
 
 export default class UserProvider extends React.Component {
-  state = {...tomato, soundStatus: Sound.status.STOPPED};
+  state = {...tomatoInitialState, soundStatus: Sound.status.STOPPED};
  
   componentDidMount () {
-    api.getTomatoTasksLog().then(res => {
+    console.log('tomato provier did mount')
+    api.getTomatoTasksLog({
+      startTime: moment().startOf('day').toISOString(),
+      endTime: moment().endOf('day').toISOString(),
+    }).then(res => {
+      console.log('tomato provier get worklog')
+
       this.setState({tasksList: res.map(o => ({...o, id: o._id}))});  
 
       let someTaskNotDone = res.find((item) => moment(item.timeStop).diff(moment(), 'milliseconds') > 0);
@@ -30,7 +37,19 @@ export default class UserProvider extends React.Component {
         this.startTimmer(secondsRemain)
       }
     }).catch(e => {
+      console.log('tomato provier get worklog ERRRR', e)
       
+    })
+  }
+
+  _getTomatoTasksLogByDate = (date) => {
+    api.getTomatoTasksLog({
+      startTime: moment(date).startOf('day').toString(),
+      endTime: moment(date).endOf('day').toString(),
+    }).then((res) => {
+      this.setState({tasksList: res.map(o => ({...o, id: o._id}))});  
+    }).catch(e => {
+
     })
   }
 
@@ -74,7 +93,7 @@ export default class UserProvider extends React.Component {
     if (this.state.taskRunning.taskName === '') {
       this.state.taskRunning.taskName = `Unnamed task start at ${moment().format('hh:mm')}`;
     }
-    this.state.taskRunning.timeStart = new Date();
+    this.state.taskRunning.timeStart = moment().toISOString();
     this.state.taskRunning.timeStop = moment().add(Default_Seconds_To_Run, 'seconds')
     
     
@@ -93,6 +112,9 @@ export default class UserProvider extends React.Component {
       this.setState({isRunning: false});
       // do something Run out of time
       this.playSound();
+      notifyMe(`Task "${this.state.taskRunning.taskName}" has end`, () => {
+        this.stopSound();
+      });
       this.setState({tasksList: [this.state.taskRunning, ...this.state.tasksList]}, () => {
         this.setState({
           taskRunning: new TomatoTaskLog({taskName: ''}),
@@ -143,7 +165,8 @@ export default class UserProvider extends React.Component {
           stopRun: this._stopRun,
           updateTaskRunning: this._updateTaskRunning,
           playSound: this.playSound,
-          stopSound: this.stopSound
+          stopSound: this.stopSound,
+          getTomatoTasksLogByDate: this._getTomatoTasksLogByDate
         }}
       >
         {this.props.children}

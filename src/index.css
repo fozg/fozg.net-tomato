@@ -67,3 +67,37 @@ a {
   color: rgb(33, 150, 243);
   text-decoration: none !important;
 }
+
+/* custom button group */
+.buttonGroup {
+  padding: 5px 20px;
+  line-height: 1;
+  height: 44px;
+}
+.buttonGroup strong {
+  font-weight: 400;
+}
+.buttonGroup i {
+  font-size: 12px;
+  font-style: normal;
+  line-height: 0.8;
+}
+.fozg-ui-buttonGroup-expand:nth-child(6)  .buttonGroup {
+  background-color: #5bb6ff;
+  color: #fff;
+  transition: 1s background-color;
+}
+.fozg-ui-buttonGroup-expand:last-of-type .buttonGroup{
+  background-color: #2196f3;
+  color: #fff;
+  transition: 1s background-color;
+}
+  /* .fozg-ui-buttonGroup-expand:last-of-type.fozg-ui-buttonGroup-active .buttonGroup,
+  .fozg-ui-buttonGroup-expand:nth-child(6).fozg-ui-buttonGroup-active .buttonGroup
+  {
+    background-color: transparent !important;
+  } */
+
+.fozg-ui-buttonGroup-expand.fozg-ui-buttonGroup-active .buttonGroup  {
+  background-color: transparent !important;
+}

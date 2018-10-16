@@ -6,6 +6,7 @@ import WelcomeMess from '../components/WelcomeMess';
 import ProgressBar from '../components/ProgressBar';
 import TomatoInput from '../components/TomatoInput';
 import SubTomatoTasksInput from '../components/SubTomatoTasksInput';
+import WeeksSelection from '../components/WeeksSeletions';
 
 import {Default_Seconds_To_Run} from '../CONST'
 import TomatoContext from '../context/TomatoContext';
@@ -17,7 +18,8 @@ export default () => (
       tasksList,
       secondsRemain,
       taskRunning,
-      updateTaskRunning
+      updateTaskRunning,
+      getTomatoTasksLogByDate
     }) => (
       [
         <div
@@ -44,6 +46,9 @@ export default () => (
           key={'tomatoList'}        
         >
           <Scrollbars height="100%" style={{paddingTop: 20}}>
+            <div style={{textAlign: 'right', marginRight: 20}}>
+              <WeeksSelection onDateChange={getTomatoTasksLogByDate}/>
+            </div>
             {tasksList.length === 0 && !isRunning && <div style={{textAlign: 'center', marginTop: 50}}>
               <h3 style={{fontWeight: 200}}>You haven't done any task today</h3>
               <h3 style={{fontWeight: 200}}>Let's do some works</h3>

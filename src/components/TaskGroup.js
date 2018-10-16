@@ -62,7 +62,7 @@ export default ({
               <div 
                 style={{...timeStyles, color: '#2196F3',}}
               >
-                {moment(timeStart).format('hh:mm')}
+                {moment(timeStart).format('HH:mm')}
               </div>
              
               <div style={{flex: 1,  color: '#2196F3'}}>
