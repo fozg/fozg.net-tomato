@@ -5,6 +5,9 @@ import App from './App';
 
 import UserProvider from './context/UserProvider';
 import TomatoProvider from './context/TomatoProvider';
+import { TomatoTaskListProvider } from './context/TomatoTaskList'
+import {TomatoTaskListContext} from './context/TomatoTaskList'
+
 
 let uri = new window.URL(window.location);
 if (uri.searchParams.get('token') !== null) {
@@ -16,9 +19,15 @@ if (uri.searchParams.get('token') !== null) {
 
 ReactDOM.render(
   <UserProvider>
-    <TomatoProvider>
-      <App />
-    </TomatoProvider>
+    <TomatoTaskListProvider>
+      <TomatoTaskListContext.Consumer>
+      {({insertTask}) => (
+        <TomatoProvider insertTask={insertTask}>
+          <App />
+        </TomatoProvider>
+        )}
+      </TomatoTaskListContext.Consumer>
+    </TomatoTaskListProvider>
   </UserProvider>, 
   document.getElementById('root')
 );

@@ -44,7 +44,10 @@ export default class Input extends Component {
                 ></input>
                 <div className="stickyOnBthStartTask">
                   <div style={{display: 'inline-block', verticalAlign: 'middle', marginRight: 10}}>
-                    <CountDown seconds={(secondsRemain)} />
+                    <CountDown
+                      seconds={(secondsRemain)} isRunning={isRunning} key={taskRunning.id} 
+                      timeStop={taskRunning.timeStop}
+                    />
                   </div>
                   {!isRunning &&
                     <div

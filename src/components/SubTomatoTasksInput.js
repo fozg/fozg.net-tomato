@@ -13,6 +13,9 @@ export default class SubTomatoTasksInput extends React.Component {
    *    updated: DateTime
    *  }]
    */
+  shouldComponentUpdate(nextProps, nextState) {
+    return (this.state !== nextState) 
+  }
 
   componentDidMount () {
     this.input.focus();
@@ -32,7 +35,6 @@ export default class SubTomatoTasksInput extends React.Component {
   _onInputChange = (e, idx) => {
     let subTasks = [...this.state.subTasks];
     subTasks[idx].taskName = e.target.value;
-    console.log(subTasks)
     this.updateSubTasks(subTasks);
   }
 
@@ -43,11 +45,13 @@ export default class SubTomatoTasksInput extends React.Component {
     this.updateSubTasks(subTasks.concat({
       taskName: this.state.newTaskInput,
       isDone: false,
-      updated: new Date()
     }));
   }
 
   updateSubTasks = (subTasks) => {
+    // if (this.props.onChange) {
+    //   this.props.onChange(subTasks);
+    // }
     this.setState({subTasks}, () => {
       if (this.props.onChange) {
         this.props.onChange(subTasks);
@@ -65,11 +69,11 @@ export default class SubTomatoTasksInput extends React.Component {
           
         <Scrollbars style={{ maxHeight: 200, }} autoHeight >
             {subTasks.map((item, idx) => (
-              <div key={idx} className="row" style={{   marginBottom: 5, marginLeft: 0, marginRight: 0}}>
+              <div key={idx} className="row" style={{ overflow: 'hidden',  marginBottom: 5, marginLeft: 0, marginRight: 0}}>
                 <div className="col-auto" style={{ paddingTop: 7, paddingLeft: 20, width: 50 }}>
                   <Checkbox isChecked={item.isDone} onChange={(isChecked) => { this._onCheckboxChange(isChecked, idx) }} />
                 </div>
-                <div className="col" style={{ flex: 1, padding: 0 }}>
+                <div className="col" style={{ flex: 1, padding: 0,  overflow: 'hidden' }}>
                   <InputStyled
                     defaultValue={item.taskName}
                     className={"added " + (item.isDone ? "done" : '')} onChange={e => { this._onInputChange(e, idx) }} spellCheck={false}
@@ -86,6 +90,7 @@ export default class SubTomatoTasksInput extends React.Component {
           <div className="col" style={{ flex: 1 }}>
             <form onSubmit={this._onNewTaskSubmit}>
               <InputStyled
+                style={{height: 42, backgroundColor: 'rgba(255,255,255,.8)'}}
                 placeholder="Enter new Sub task"
                 value={this.state.newTaskInput}
                 onChange={e => { this.setState({ newTaskInput: e.target.value }) }}
@@ -108,6 +113,8 @@ const InputStyled = styled.input`
   transition: background .3s;
   border-radius: 5px;
   font-size: 16px;
+  box-sizing: border-box;
+  height: 35px;
   :focus {
     outline: none;
   }
@@ -120,6 +127,7 @@ const InputStyled = styled.input`
   }
   :focus {
     background: rgba(255,255,255,.5);
+    border: 1px solid #4caf5040;
   }
   &.done {
     text-decoration: line-through;

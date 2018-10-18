@@ -1,7 +1,7 @@
 
 let isDevelopment = process.env.NODE_ENV === 'development';
 
-export const Default_Seconds_To_Run = (isDevelopment ? 1 : 25) * 60; // 25 minutes * 60 seconds
+export const Default_Seconds_To_Run = (isDevelopment ? 10 : 25) * 60; // 25 minutes * 60 seconds
 
 export const SIGN_IN_LINK = isDevelopment ? 'http://localhost:3333/signin' : 'https://accounts.fozg.net/signin';
 export const SIGN_OUT_LINK = isDevelopment ? 'http://localhost:3333/signout' : 'https://accounts.fozg.net/signout';

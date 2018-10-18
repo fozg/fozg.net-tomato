@@ -7,24 +7,23 @@ import api from '../api';
 import {notifyMe} from '../helper';
 
 import TomatoTaskLog from '../models/TomatoTaskLog';
+import {TomatoTaskListContext} from './TomatoTaskList'
 var Sound = require('react-sound').default;
 
 export default class UserProvider extends React.Component {
   state = {...tomatoInitialState, soundStatus: Sound.status.STOPPED};
  
   componentDidMount () {
-    console.log('tomato provier did mount')
     api.getTomatoTasksLog({
-      startTime: moment().startOf('day').toISOString(),
+      startTime: moment().subtract(Default_Seconds_To_Run + 5, 'seconds').toISOString(),
       endTime: moment().endOf('day').toISOString(),
     }).then(res => {
-      console.log('tomato provier get worklog')
 
       this.setState({tasksList: res.map(o => ({...o, id: o._id}))});  
 
       let someTaskNotDone = res.find((item) => moment(item.timeStop).diff(moment(), 'milliseconds') > 0);
       if (someTaskNotDone !== undefined) {
-        console.log(someTaskNotDone)
+        
         let secondsRemain = moment(someTaskNotDone.timeStop).diff(moment(), 'seconds');
         let tasksList = [...this.state.tasksList]; 
         tasksList.shift();
@@ -87,7 +86,7 @@ export default class UserProvider extends React.Component {
     }, 500)
   }
 
-  _startRun = taskName => {
+  _startRun = (taskName, parent) => {
     if (this.state.isRunning) return;
 
     if (this.state.taskRunning.taskName === '') {
@@ -97,7 +96,7 @@ export default class UserProvider extends React.Component {
     this.state.taskRunning.timeStop = moment().add(Default_Seconds_To_Run, 'seconds')
     
     
-    this.state.taskRunning.save().then(() => {
+    this.state.taskRunning.save().then((res) => {
       this.startTimmer();
       this.setState({taskRunning: this.state.taskRunning})
     })
@@ -109,43 +108,64 @@ export default class UserProvider extends React.Component {
 
     if (secondsToRun < 0) {
       clearTimeout(this.loop);
-      this.setState({isRunning: false});
-      // do something Run out of time
-      this.playSound();
-      notifyMe(`Task "${this.state.taskRunning.taskName}" has end`, () => {
-        this.stopSound();
-      });
-      this.setState({tasksList: [this.state.taskRunning, ...this.state.tasksList]}, () => {
-        this.setState({
-          taskRunning: new TomatoTaskLog({taskName: ''}),
-          secondsRemain: Default_Seconds_To_Run
-        });
-        document.title = `TomatoWorks`;
-      })
-      return;
+      
     }
     this.setState({isRunning: true})
-    this.loop = setTimeout(() => {
-      this.setState({secondsRemain: secondsToRun});
-      this.startTimmer(secondsToRun - 1);
-      document.title = `(${`0${Math.floor(secondsToRun/60)}`.slice(-2)}:${`0${secondsToRun%60}`.slice(-2)}) TomatoWorks`
-    }, 500)
+    this.setState({secondsRemain: secondsToRun});
+    this.runningTomato = setTimeout(() => {
+      this.whenTaskStopDo();
+      // this.startTimmer(secondsToRun - 1);
+      document.title = `TomatoWorks`
+    }, (secondsToRun + .5) * 1000)
+  }
+
+  whenTaskStopDo = () => {
+    this.setState({isRunning: false});
+      // do something Run out of time
+    this.playSound();
+    notifyMe(`Task "${this.state.taskRunning.taskName}" has end`, () => {
+      this.stopSound();
+    });
+
+    setTimeout(() => {
+      this.props.insertTask(this.state.taskRunning)  
+      this.setState({
+        taskRunning: new TomatoTaskLog({taskName: ''}),
+        secondsRemain: Default_Seconds_To_Run
+      });
+    }, 1000);
+    document.title = `TomatoWorks`;
+
+    return;
   }
 
   stopTimmer = () => {
     this.setState({isRunning: false, secondsRemain: Default_Seconds_To_Run})
     document.title = `TomatoWorks`;
-    clearTimeout(this.loop);
+    clearTimeout(this.runningTomato);
   }
 
   _stopRun = () => {
     this.state.taskRunning.stop().then(() => {
-      this.setState({tasksList: [this.state.taskRunning, ...this.state.tasksList]}, () => {
-        this.setState({taskRunning: new TomatoTaskLog({taskName: ''})})
-      })
+      this.props.insertTask(this.state.taskRunning)
+      this.setState({taskRunning: new TomatoTaskLog({taskName: ''})})
+      // this.setState({tasksList: [this.state.taskRunning, ...this.state.tasksList]}, () => {
+      // })
     });
    
     this.stopTimmer();
+  }
+
+  _continueTask = task => {
+    console.log(task)
+    if (this.state.isRunning) return;
+    let tomato = new TomatoTaskLog({
+      taskName: `Continute: '${task.parent ? task.parent.taskName : task.taskName}'`,
+      parent: task,
+    });
+    this.setState({taskRunning: tomato}, () => {
+      this._startRun();
+    })
   }
 
   playSound = () => {
@@ -156,29 +176,32 @@ export default class UserProvider extends React.Component {
     this.setState({soundStatus: Sound.status.STOPPED})
   }
 
+
+
   render () {
    return (
-      <TomatoContext.Provider
-        value={{
-          ...this.state,
-          startRun: this._startRun,
-          stopRun: this._stopRun,
-          updateTaskRunning: this._updateTaskRunning,
-          playSound: this.playSound,
-          stopSound: this.stopSound,
-          getTomatoTasksLogByDate: this._getTomatoTasksLogByDate
-        }}
-      >
-        {this.props.children}
-        <Sound
-            url="mp3/ido.mp3"
-            playStatus={this.state.soundStatus}
-            playFromPosition={0 /* in milliseconds */}
-            // onLoading={this.handleSongLoading}
-            // onPlaying={this.handleSongPlaying}
-            // onFinishedPlaying={this.handleSongFinishedPlaying}
-          />
-      </TomatoContext.Provider>
+    <TomatoContext.Provider
+      value={{
+        ...this.state,
+        startRun: this._startRun,
+        stopRun: this._stopRun,
+        updateTaskRunning: this._updateTaskRunning,
+        playSound: this.playSound,
+        stopSound: this.stopSound,
+        getTomatoTasksLogByDate: this._getTomatoTasksLogByDate,
+        continueTask: this._continueTask
+      }}
+    >
+      {this.props.children}
+      <Sound
+          url="mp3/ido.mp3"
+          playStatus={this.state.soundStatus}
+          playFromPosition={0 /* in milliseconds */}
+          // onLoading={this.handleSongLoading}
+          // onPlaying={this.handleSongPlaying}
+          // onFinishedPlaying={this.handleSongFinishedPlaying}
+        />
+    </TomatoContext.Provider>
     )
   }
 }

@@ -10,7 +10,8 @@ export default class TomatoTaskLog {
     taskName,
     timeStart,
     timeStop,
-    subTasks = null
+    subTasks = [],
+    parent = null
   }) {
     this.id = id;
     // this.userId = userId;
@@ -18,6 +19,7 @@ export default class TomatoTaskLog {
     this.timeStart = timeStart;
     this.timeStop = timeStop;
     this.subTasks = subTasks;
+    this.parent = parent;
   }
 
   async save (){
@@ -40,7 +42,7 @@ export default class TomatoTaskLog {
     this.timeStop = new Date();
     let res = await _fetchPUT(API.TOMATO_WORK_LOG, {id: this.id, timeStop: this.timeStop});
     
-    this.timeStop = res.timeStop;
+    this.timeStop = this.timeStop;
     
     return this;
   }
@@ -57,7 +59,8 @@ export default class TomatoTaskLog {
       taskName: this.taskName,
       timeStart: this.timeStart,
       timeStop: this.timeStop,
-      subTasks: this.subTasks
+      subTasks: this.subTasks,
+      parent: this.parent
     }
   }
 }

@@ -1,13 +1,16 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+  /* font-family: 'Encode Sans', sans-serif; */
+  font-family: 'Niramit', sans-serif;
   overflow: hidden;
 }
 .inputTask {
   transition: all .3s;
   border: none;
-  background-color: #f9876b;
+  /* background-color: #f9876b; */
+  background-color: #dc5858;  
   border-radius: 5px;
   width: 100%;
   line-height: 40px;
@@ -20,7 +23,8 @@ body {
 }
 .inputTask:focus {
   box-shadow: 0 5px 20px rgba(0,0,0,.25);
-  background-color: #f88062;
+  /* background-color: #f88062; */
+  background-color: #ce5252;
   outline: none;
   
   /* transition:  .3s; */
@@ -54,14 +58,6 @@ body {
 }
 
 
-.taskItemWrap {
-  border-radius: 5px;
-  padding: 10px;
-
-}
-.taskItemWrap:hover {
-  background-color: #eee;
-}
 
 a {
   color: rgb(33, 150, 243);
@@ -100,4 +96,7 @@ a {
 
 .fozg-ui-buttonGroup-expand.fozg-ui-buttonGroup-active .buttonGroup  {
   background-color: transparent !important;
+}
+.fozg-ui-SelectGroup-active {
+  background-color:  #dc5858 !important;
 }

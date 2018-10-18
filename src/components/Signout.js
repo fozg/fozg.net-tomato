@@ -20,9 +20,10 @@ export default class Signout extends React.Component {
     const {isShowIframeLogout} = this.state;
 
     return (
-      <div style={{display: 'inline-block'}}>
+      <div style={{display: 'inline-block',}}>
         (<a href="#"
           onClick={this._onClick}
+          style={{color: 'rgba(255,255,255,.5)',}}
         >signout</a>)
         {isShowIframeLogout && <iframe src={SIGN_OUT_LINK} onLoad={this._onSignOutAllSuccess} style={{display: 'none'}} />}
       </div>
