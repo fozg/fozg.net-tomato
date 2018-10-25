@@ -29,10 +29,6 @@ export default class TomatoTaskList extends React.PureComponent {
   }
 
   render() {
-    const {
-      tasksList
-    } = this.state;
-
     return (
       <TomatoContext.Consumer>
         {({
@@ -40,11 +36,11 @@ export default class TomatoTaskList extends React.PureComponent {
         }) => (
           <TomatoTaskListContext.Consumer>
             {({ 
-              tasksList,
+              data,
               getTomatoTasksLogByDate
             }) => (
               <TaskList 
-                tasksList={tasksList}
+                data={data}
                 getTomatoTasksLogByDate={getTomatoTasksLogByDate} 
                 continueTask={continueTask}
               />
@@ -57,23 +53,21 @@ export default class TomatoTaskList extends React.PureComponent {
 }
 
 class TaskList extends React.PureComponent {
-  shouldComponentUpdate (nextProps, nextState) {
-    return nextProps.tasksList.length !== this.props.tasksList.length
-  }
+  
   render () {
-    const {tasksList, getTomatoTasksLogByDate, continueTask} = this.props;
+    const {data, getTomatoTasksLogByDate, continueTask} = this.props;
 
     return (
       <Scrollbars height="100%" style={{ paddingTop: 10 }}>
         <div style={{ textAlign: 'right', marginRight: 20 }}>
           <WeeksSelection onDateChange={getTomatoTasksLogByDate} />
         </div>
-        {tasksList.length === 0 && <div style={{ textAlign: 'center', marginTop: 50 }}>
+        {data.get('tasksList').length === 0 && <div style={{ textAlign: 'center', marginTop: 50 }}>
           <h3 style={{ fontWeight: 200 }}>You haven't done any task today</h3>
           <h3 style={{ fontWeight: 200 }}>Let's do some works</h3>
         </div>}
         
-        {tasksList.map((tomato, idx) => (
+        {data.get('tasksList').map((tomato, idx) => (
           <TaskGroup 
             {...tomato} 
             key={tomato.id} 

@@ -1,10 +1,11 @@
 import React from 'react';
 import api from '../api';
 import moment from 'moment';
+
+const { List, Set, Map } = require('immutable')
 // init 
-export const tasksList = {
-  tasksList: []
-}
+export const tasksList = {data: Map({ tasksList: List() })}
+
 
 // context
 export const TomatoTaskListContext = React.createContext(tasksList);
@@ -21,8 +22,10 @@ export class TomatoTaskListProvider extends React.Component {
     }).then(res => {
       console.log('tomato provier get worklog from TomatoTaskListProvider')
 
-      this.setState({tasksList: res.map(o => ({...o, id: o._id}))});  
-
+      // this.setState({tasksList: res.map(o => ({...o, id: o._id}))});  
+      this.setState(({data}) => ({
+        data: data.update('tasksList', list => List(res.map(o => ({...o, id: o._id}))))
+      }));
       // let someTaskNotDone = res.find((item) => moment(item.timeStop).diff(moment(), 'milliseconds') > 0);
       // if (someTaskNotDone !== undefined) {
       //   console.log(someTaskNotDone)
@@ -48,21 +51,28 @@ export class TomatoTaskListProvider extends React.Component {
       startTime: moment(date).startOf('day').toString(),
       endTime: moment(date).endOf('day').toString(),
     }).then((res) => {
-      this.setState({tasksList: res.map(o => ({...o, id: o._id}))});  
+      // this.setState({tasksList: res.map(o => ({...o, id: o._id}))}); 
+      this.setState(({data}) => ({
+        data: data.update('tasksList', list => List(res.map(o => ({...o, id: o._id}))))
+      }));
     }).catch(e => {
 
     })
   }
 
   _insertTask = (taskRunning) => {
-    this.setState({tasksList: [taskRunning, ...this.state.tasksList]});
+    // this.setState({tasksList: [taskRunning, ...this.state.tasksList]});
+    this.setState(({data}) => ({
+      data: data.update('tasksList', list => list.insert(0, taskRunning))
+    }));
   }
 
   render () {
-   return (
+    var data = this.state.data;
+    return (
       <TomatoTaskListContext.Provider
         value={{
-          tasksList: this.state.tasksList,
+          data: data,
           getTomatoTasksLogByDate: this._getTomatoTasksLogByDate,
           insertTask: this._insertTask
         }}

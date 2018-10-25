@@ -3,8 +3,11 @@ body {
   padding: 0;
   /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
   /* font-family: 'Encode Sans', sans-serif; */
-  font-family: 'Niramit', sans-serif;
+  font-family: 'Niramit', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   overflow: hidden;
+}
+.react-icons {
+  vertical-align: middle;
 }
 .inputTask {
   transition: all .3s;

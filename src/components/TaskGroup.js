@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 import {Button} from 'fozg-ui'
+import {FiTrash2, FiCornerRightUp} from 'react-icons/fi';
 
 export default class TomatoGroup extends React.PureComponent {
   render () {
@@ -74,10 +75,11 @@ export default class TomatoGroup extends React.PureComponent {
                 </div>
               </div>
             </div>
-            <div className="col-3 autoHide" style={{textAlign: 'right'}}>
-              <Button round color="#4CAF50" onClick={continueThisTask}>Continute this task</Button>
+            <div className="col-3 autoHide" style={{textAlign: 'right', fontSize: 14}}>
+              <Button round={5} color="#009688" onClick={continueThisTask}>
+                Continute this task <FiCornerRightUp fill="transparent"/></Button>
               {' '}
-              <Button color="#e05147">Delete</Button>
+              <Button round={5} color="#aaa" hoverColor='red'><FiTrash2 fill="transparent"/></Button>
             </div>
           </div>
         </div>
