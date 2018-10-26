@@ -14,7 +14,7 @@ export default class Header extends React.Component {
         // borderBottom: '1px solid #ddd',
         padding: 5,
         background: '#dc5858',// rgb(109, 76, 162)',
-        height: 44
+        height: '3.2em'
       }} className="row">
 
         <div>

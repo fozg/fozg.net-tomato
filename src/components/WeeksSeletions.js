@@ -44,7 +44,7 @@ export default class WeeksSelection extends React.Component {
         <SelectGroup
           activeIdx={this.state.buttonGroupActiveIdx}
           onChange={this._onChange}
-          height={40}
+          height={'2.68em'}
         >
           {currentDaysOfWeek.map((day, idx) => (
             <div className="buttonGroup" key={idx}>

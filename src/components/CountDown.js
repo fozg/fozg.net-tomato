@@ -22,7 +22,6 @@ export default class CountDown extends React.Component {
 
   loop = (sec) => {
     let seconds = moment(this.props.timeStop).diff(moment(), 'seconds')
-    console.log({seconds})
     if (seconds < 0) {
       clearTimeout(this.delay);
       return;
@@ -39,7 +38,7 @@ export default class CountDown extends React.Component {
       <div
         style={{margin: 'auto', textAlign: 'center'}}
       >
-        <h3 style={{margin: 0, padding: 0, color: '#fff'}}>
+        <h3 style={{margin: 0, padding: 0, color: '#fff', fontSize: '1.5em'}}>
           {`0${Math.floor(seconds/60)}`.slice(-2)}:{`0${seconds%60}`.slice(-2)}
         </h3>
       </div>

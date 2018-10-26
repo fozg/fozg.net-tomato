@@ -14,7 +14,7 @@ const Mess = ({name}) => {
   if (hours > 18) return <h2>Good night, {name} </h2>
 
 
-  return <h2>Good afternoon, {name}</h2>
+  return <h2 style={{fontSize: '2em'}}>Good afternoon, {name}</h2>
 
 }
 

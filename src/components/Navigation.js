@@ -26,7 +26,7 @@ const Link = styled.a`
   padding: 8px 10px;
   display: block;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 1em;
   
   &.active{
     background-color: rgba(0,0,0,.08);

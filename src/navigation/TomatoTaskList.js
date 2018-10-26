@@ -17,16 +17,17 @@ export default class TomatoTaskList extends React.PureComponent {
     tasksList: [],
   }
 
-  _getTomatoTasksLogByDate = (date) => {
-    api.getTomatoTasksLog({
-      startTime: moment(date).startOf('day').toString(),
-      endTime: moment(date).endOf('day').toString(),
-    }).then((res) => {
-      this.setState({ tasksList: res.map(o => ({ ...o, id: o._id })) });
-    }).catch(e => {
+  // _getTomatoTasksLogByDate = (date) => {
+  //   api.getTomatoTasksLog({
+  //     startTime: moment(date).startOf('day').toString(),
+  //     endTime: moment(date).endOf('day').toString(),
+  //   }).then((res) => {
+  //     this.setState({ tasksList: res.map(o => ({ ...o, id: o._id })) });
+     
+  //   }).catch(e => {
 
-    })
-  }
+  //   })
+  // }
 
   render() {
     return (
@@ -56,13 +57,13 @@ class TaskList extends React.PureComponent {
   
   render () {
     const {data, getTomatoTasksLogByDate, continueTask} = this.props;
-
+    console.log(data.get('tasksList'))
     return (
       <Scrollbars height="100%" style={{ paddingTop: 10 }}>
         <div style={{ textAlign: 'right', marginRight: 20 }}>
           <WeeksSelection onDateChange={getTomatoTasksLogByDate} />
         </div>
-        {data.get('tasksList').length === 0 && <div style={{ textAlign: 'center', marginTop: 50 }}>
+        {data.get('tasksList').size === 0 && <div style={{ textAlign: 'center', marginTop: 50 }}>
           <h3 style={{ fontWeight: 200 }}>You haven't done any task today</h3>
           <h3 style={{ fontWeight: 200 }}>Let's do some works</h3>
         </div>}

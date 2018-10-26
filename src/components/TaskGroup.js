@@ -24,8 +24,6 @@ export default class TomatoGroup extends React.PureComponent {
       <WrapStyled>    
         <div style={isSeleted ? {border: '2px solid #f9876b', backgroundColor: '#eee'} : null}>
           <div className="row">
-            <div className="col-9">
-              <div className="row">
                 <div style={{width: 50, textAlign: 'center'}}>
                   {tstop && moment.duration(moment(tstop).diff(moment(timeStart))).minutes()}'
                 </div>
@@ -74,15 +72,12 @@ export default class TomatoGroup extends React.PureComponent {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="col-3 autoHide" style={{textAlign: 'right', fontSize: 14}}>
-              <Button round={5} color="#009688" onClick={continueThisTask}>
+            <div className="autoHide" style={{textAlign: 'right', fontSize: 14}}>
+              <Button  color="#009688" onClick={continueThisTask}>
                 Continute this task <FiCornerRightUp fill="transparent"/></Button>
-              {' '}
-              <Button round={5} color="#aaa" hoverColor='red'><FiTrash2 fill="transparent"/></Button>
+              <Button color="#aaa" hoverColor='red'><FiTrash2 fill="transparent"/></Button>
             </div>
           </div>
-        </div>
       </WrapStyled>
     )
   }
@@ -100,7 +95,9 @@ const timeStyles = {
 } 
 
 const WrapStyled = styled.div`
-  
+  position: relative;
+  cusor: default;
+
   :first-of-type {
     background-color: red;
   }
@@ -117,7 +114,16 @@ const WrapStyled = styled.div`
     display: block;
   }
   .autoHide {
-    display: none
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: -5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px rgba(0,0,0,.1);
+    line-height: 1;
+    overflow: hidden;
   }
 `
 
