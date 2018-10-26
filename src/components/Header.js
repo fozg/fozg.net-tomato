@@ -18,8 +18,8 @@ export default class Header extends React.Component {
       }} className="row">
 
         <div>
-          <div style={{fontWeight: 600, color: '#fff', textAlign: 'center', lineHeight: '35px'}}>
-            <img src='favicon.png' alt="TomatoWorks" width="30px" />
+          <div style={{fontWeight: 600, color: '#fff', textAlign: 'center', lineHeight: '2em', fontSize: '1.2em'}}>
+            <img src='favicon.png' alt="TomatoWorks" style={{height: "2em"}} />
             {' '}TomatoWorks
           </div>
         </div>

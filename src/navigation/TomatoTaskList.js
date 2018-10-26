@@ -60,8 +60,10 @@ class TaskList extends React.PureComponent {
     console.log(data.get('tasksList'))
     return (
       <Scrollbars height="100%" style={{ paddingTop: 10 }}>
-        <div style={{ textAlign: 'right', marginRight: 20 }}>
-          <WeeksSelection onDateChange={getTomatoTasksLogByDate} />
+        <div className="row" style={{width: '90%', margin: 'auto', justifyContent: 'flex-end'}}>
+          
+            <WeeksSelection onDateChange={getTomatoTasksLogByDate} />
+          
         </div>
         {data.get('tasksList').size === 0 && <div style={{ textAlign: 'center', marginTop: 50 }}>
           <h3 style={{ fontWeight: 200 }}>You haven't done any task today</h3>

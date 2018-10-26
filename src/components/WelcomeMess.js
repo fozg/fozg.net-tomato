@@ -7,11 +7,11 @@ import TomatoContext from '../context/TomatoContext';
 const Mess = ({name}) => {
   let hours = moment().hours();
 
-  if (hours < 5) return <h2>It's early Morning, {name} </h2>
+  if (hours < 5) return <h2 style={{fontSize: '2em'}}>It's early Morning, {name} </h2>
 
-  if (hours < 12) return <h2>Good morning, {name} </h2>
+  if (hours < 12) return <h2 style={{fontSize: '2em'}}>Good morning, {name} </h2>
 
-  if (hours > 18) return <h2>Good night, {name} </h2>
+  if (hours > 18) return <h2 style={{fontSize: '2em'}}>Good night, {name} </h2>
 
 
   return <h2 style={{fontSize: '2em'}}>Good afternoon, {name}</h2>

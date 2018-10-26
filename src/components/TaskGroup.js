@@ -18,8 +18,9 @@ export default class TomatoGroup extends React.PureComponent {
     
     let tstop;
     let diff = moment(timeStop).diff(moment(), 'milliseconds');
-    tstop = diff > 0 ? null : timeStop;
-    console.log('check')
+    tstop = diff > 0 ? false : timeStop;
+    console.log('check', tstop)
+    if (tstop === false) return false;
     return (
       <WrapStyled>    
         <div style={isSeleted ? {border: '2px solid #f9876b', backgroundColor: '#eee'} : null}>

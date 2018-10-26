@@ -8,7 +8,7 @@ export default class Navigation extends React.Component {
   render() {
     return (
       <div
-        style={{background: '#f4f4f4', height: '100%', borderRight: '1px solid #ddd'}}
+        style={{background: '#fafafa', height: '100%', borderRight: '1px solid #e6e6e6'}}
       >
          
         <div>

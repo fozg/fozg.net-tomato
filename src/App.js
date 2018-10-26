@@ -43,7 +43,7 @@ class App extends Component {
               <Tomato />
             </div>
           </div>
-          <div style={{backgroundColor: '#eee', height: '100%', borderLeft: '1px solid #ddd', padding: 0, width: 400}}>
+          <div style={{backgroundColor: '#eee', height: '100%', borderLeft: '1px solid #e6e6e6', padding: 0, width: 400}}>
             <RightPanel />
           </div>
         </div>
