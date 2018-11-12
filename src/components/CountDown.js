@@ -27,6 +27,8 @@ export default class CountDown extends React.Component {
       return;
     }
     this.delay = setTimeout(() => {
+      let time = `0${Math.floor(seconds/60)}`.slice(-2) + ':' + `0${seconds%60}`.slice(-2) ;
+      document.title = `(${time}) TomatoWorks`
       this.setState({seconds});
       this.loop()
     }, 1000);

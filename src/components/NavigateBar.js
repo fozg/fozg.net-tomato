@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 
 
-export default class Navigation extends React.Component {
+export default class NavigateBar extends React.Component {
   
   // #dc3545 Tomato color
   render() {

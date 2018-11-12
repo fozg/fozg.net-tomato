@@ -1,21 +1,17 @@
 import React from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
 import styled from 'styled-components';
 
-import TaskGroup from '../components/TaskGroup';
-import WelcomeMess from '../components/WelcomeMess';
-import ProgressBar from '../components/ProgressBar';
-import TomatoInput from '../components/TomatoInput';
-import SubTomatoTasksInput from '../components/SubTomatoTasksInput';
-import WeeksSelection from '../components/WeeksSeletions';
+import WelcomeMess from '../../components/WelcomeMess';
+import ProgressBar from '../../components/ProgressBar';
+import TomatoInput from '../../components/TomatoInput';
+import SubTomatoTasksInput from '../../components/SubTomatoTasksInput';
 
-import { Default_Seconds_To_Run } from '../CONST'
-import TomatoContext from '../context/TomatoContext';
+import TomatoContext from '../../context/TomatoContext';
 
 // big Component
 import TomatoTaskList from './TomatoTaskList'
 
-export default () => ([
+export default () => (
     <TomatoContext.Consumer key="tomatoCusumer">
       {({
         isRunning,
@@ -27,7 +23,7 @@ export default () => ([
             key={'tomatoInput'}
             className={isRunning ? 'running' : 'idle'}
           >
-            <div style={{ margin: '0 20px', position: 'relative' }}>
+            <div style={{ margin: 'auto', position: 'relative' }}>
               <WelcomeMess />
               <TomatoInput />
               {
@@ -48,14 +44,8 @@ export default () => ([
             </div>
           </WrapStyled>
         )}
-    </TomatoContext.Consumer>,
-    <div
-      style={{ height: '100%', display: 'flex' }}
-      key={'tomatoList'}
-    >
-      <TomatoTaskList />
-    </div>
-  ]
+    </TomatoContext.Consumer>
+  
 )
 
 const WrapStyled = styled.div`

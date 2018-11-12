@@ -3,13 +3,13 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import moment from 'moment';
 
 
-import WeeksSelection from '../components/WeeksSeletions';
-import TaskGroup from '../components/TaskGroup';
+import WeeksSelection from '../../components/WeeksSeletions';
+import TaskGroup from '../../components/TaskGroup';
 
-import api from '../api';
+import api from '../../api';
 
-import { TomatoTaskListContext } from '../context/TomatoTaskList';
-import TomatoContext from '../context/TomatoContext';
+import { TomatoTaskListContext } from '../../context/TomatoTaskList';
+import TomatoContext from '../../context/TomatoContext';
 
 export default class TomatoTaskList extends React.PureComponent {
   
@@ -59,11 +59,9 @@ class TaskList extends React.PureComponent {
     const {data, getTomatoTasksLogByDate, continueTask} = this.props;
     console.log(data.get('tasksList'))
     return (
-      <Scrollbars height="100%" style={{ paddingTop: 10 }}>
-        <div className="row" style={{width: '90%', margin: 'auto', justifyContent: 'flex-end'}}>
-          
+      <Scrollbars height="100%" style={{ paddingTop: 10,}}>
+        <div className="row" style={{width: '90%', margin: 'auto', justifyContent: 'space-between'}}>
             <WeeksSelection onDateChange={getTomatoTasksLogByDate} />
-          
         </div>
         {data.get('tasksList').size === 0 && <div style={{ textAlign: 'center', marginTop: 50 }}>
           <h3 style={{ fontWeight: 200 }}>You haven't done any task today</h3>

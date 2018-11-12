@@ -10,7 +10,7 @@ export default class TomatoTaskLog {
     taskName,
     timeStart,
     timeStop,
-    subTasks = [],
+    subTasks = [],  // [{taskName, isDone}]
     parent = null
   }) {
     this.id = id;

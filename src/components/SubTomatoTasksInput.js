@@ -112,7 +112,7 @@ const InputStyled = styled.input`
   padding: 10px;
   transition: background .3s;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 1em;
   box-sizing: border-box;
   height: 35px;
   :focus {

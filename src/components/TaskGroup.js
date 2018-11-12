@@ -67,15 +67,16 @@ export default class TomatoGroup extends React.PureComponent {
                       {moment(timeStart).format('HH:mm')}
                     </div>
                   
-                    <div style={{flex: 1,  color: 'rgba(0,0,0,.1)'}}>
+                    <div style={{flex: 1,  color: 'rgba(0,0,0,.3)'}}>
                       → {taskName}
                     </div>
                   </div>
                 </div>
               </div>
-            <div className="autoHide" style={{textAlign: 'right', fontSize: 14}}>
+            <div className="autoHide" style={{textAlign: 'right', fontSize: '1em'}}>
               <Button  color="#009688" onClick={continueThisTask}>
-                Continute this task <FiCornerRightUp fill="transparent"/></Button>
+                Continute this task <FiCornerRightUp fill="transparent"/>
+              </Button>
               <Button color="#aaa" hoverColor='red'><FiTrash2 fill="transparent"/></Button>
             </div>
           </div>
@@ -102,7 +103,7 @@ const WrapStyled = styled.div`
   :first-of-type {
     background-color: red;
   }
-  width: calc(100% - 20px);
+  width: calc(100% - 10px);
   margin: auto;
   border-top: 1px solid #e5e5e5;
   padding: 10px;
@@ -118,7 +119,7 @@ const WrapStyled = styled.div`
     display: none;
     position: absolute;
     right: 10px;
-    top: -5px;
+    top: -3px;
     border: 1px solid #ddd;
     background-color: #fff;
     border-radius: 5px;

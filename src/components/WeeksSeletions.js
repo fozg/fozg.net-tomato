@@ -34,28 +34,28 @@ export default class WeeksSelection extends React.Component {
       currentDaysOfWeek
     } = this.state;
     return (
-      <div
-        style={{display: 'flex', justifyContent: 'space-between'}}
-      > 
-        <div>
+      [
+        <div key="item-1">
           {this.today !== buttonGroupActiveIdx &&
             <Button onClick={this.onBackToTodayClick}>Go back Today</Button>}
-        </div>
-        <SelectGroup
-          activeIdx={this.state.buttonGroupActiveIdx}
-          onChange={this._onChange}
-          height={'2.68em'}
-        >
-          {currentDaysOfWeek.map((day, idx) => (
-            <div className="buttonGroup" key={idx}>
-              <strong style={{fontWeight: this.today === idx ? '600' : '400'}}>
-                {day.format('ddd')}
-              </strong>
-              <div style={{fontSize: 12, opacity: .6}}>{day.format('MMM DD')}</div>
-            </div>
-          ))}
+        </div>,
+        <div style={{textAlign: 'right'}} key="item-2">
+          <SelectGroup
+            activeIdx={this.state.buttonGroupActiveIdx}
+            onChange={this._onChange}
+            height={'2.68em'}
+          >
+            {currentDaysOfWeek.map((day, idx) => (
+              <div className="buttonGroup" key={idx}>
+                <strong style={{fontWeight: this.today === idx ? '600' : '400'}}>
+                  {day.format('ddd')}
+                </strong>
+                <div style={{fontSize: 12, opacity: .6}}>{day.format('MMM DD')}</div>
+              </div>
+            ))}
         </SelectGroup>
-      </div>
+        </div>
+      ]
     )
   }
 }

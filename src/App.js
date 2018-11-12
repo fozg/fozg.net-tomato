@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import RightPanel from './components/RightPanel';
-import Navigation from './components/Navigation';
+import NavigateBar from './components/NavigateBar';
 import Header from './components/Header'
 
 // navigation
@@ -36,16 +36,16 @@ class App extends Component {
         <Header />
         <div className="row" style={{height: 'calc(100vh - 44px)'}} >
           <div  style={{backgroundColor: '#eee', height: '100%', padding: 0, width: 250}}>
-            <Navigation />
+            <NavigateBar />
           </div>
           <div className="col-sm" style={{padding: 0}}>
             <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
               <Tomato />
             </div>
           </div>
-          <div style={{backgroundColor: '#eee', height: '100%', borderLeft: '1px solid #e6e6e6', padding: 0, width: 400}}>
+          {/* <div style={{backgroundColor: '#eee', height: '100%', borderLeft: '1px solid #e6e6e6', padding: 0, width: 400}}>
             <RightPanel />
-          </div>
+          </div> */}
         </div>
       </div>
     );
