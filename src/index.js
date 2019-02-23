@@ -12,9 +12,9 @@ import {TomatoTaskListContext} from './context/TomatoTaskList'
 let uri = new window.URL(window.location);
 let token = uri.searchParams.get('token') || uri.searchParams.get('auth');
 if (token !== null) {
-  localStorage.setItem('token', uri.searchParams.get('token'));
+  localStorage.setItem('token', token);
   uri.searchParams.delete('token');
-  
+  uri.searchParams.delete('auth');  
   window.history.pushState(null, null, uri)
 }
 
