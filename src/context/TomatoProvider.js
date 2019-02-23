@@ -163,7 +163,7 @@ export default class UserProvider extends React.Component {
     if (this.state.isRunning) return;
 
     let tomato = new TomatoTaskLog({
-      taskName: `Continute: '${task.parent ? task.parent.taskName : task.taskName}'`,
+      taskName: `Continue: '${task.parent ? task.parent.taskName : task.taskName}'`,
       parent: task.parent ? task.parent : task, // nếu task Đang chạy tiếp của task khác thì tiếp tục chạy task 'khác' đó,
       subTasks: task.subTasks.filter(o => !o.isDone),
     });

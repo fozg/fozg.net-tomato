@@ -5,7 +5,7 @@ export const Default_Seconds_To_Run = (isDevelopment ? 10 : 25) * 60; // 25 minu
 
 export const SIGN_IN_LINK = isDevelopment ? 'http://localhost:3333/signin' : 'https://accounts.fozg.net/signin';
 export const SIGN_OUT_LINK = isDevelopment ? 'http://localhost:3333/signout' : 'https://accounts.fozg.net/signout';
-export const CONTINUTE_URL = isDevelopment ? 'http://localhost:3000/' : 'https://fozg.net/tomato';
+export const CONTINUE_URL = isDevelopment ? 'http://localhost:3000/' : 'https://fozg.net/tomato';
 
 const API_SERVER = isDevelopment ? 'http://localhost:3301/api' : 'https://fozg.net/tomato/api/'
 

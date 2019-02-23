@@ -3,7 +3,7 @@ import React from 'react';
 import UserContext from '../context/UserContext';
 
 import Signout from './Signout';
-import {SIGN_IN_LINK, CONTINUTE_URL} from '../CONST';
+import {SIGN_IN_LINK, CONTINUE_URL} from '../CONST';
 
 export default class Header extends React.Component {
 
@@ -32,7 +32,7 @@ export default class Header extends React.Component {
               >
                 <a href="#" style={{color: 'rgba(255,255,255,.9)'}}>@{ctx.user.username}</a> <Signout></Signout>
               </div> :
-              <a href={encodeURI(`${SIGN_IN_LINK}?service=tomato&continueUrl=${CONTINUTE_URL}`)}>
+              <a href={encodeURI(`${SIGN_IN_LINK}?service=tomato&continueUrl=${CONTINUE_URL}`)}>
                 <div style={{
                   background: '#dc5858',
                   color: 'rgba(255,255,255,.5)',

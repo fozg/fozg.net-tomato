@@ -38,7 +38,7 @@ export default class TomatoGroup extends React.PureComponent {
                     <div style={{flex: 1, color: 'red'}}>
                       {tstop ? <div>
                         {parent ? <div>
-                          <span style={{color: '#9e9e9e'}}>continute: </span>
+                          <span style={{color: '#9e9e9e'}}>continue: </span>
                           <a style={{color: '#2196f3', fontWeight: 600}}>#{parent.taskName}</a>
                         </div> : `← ${taskName}`}
                       
@@ -75,7 +75,7 @@ export default class TomatoGroup extends React.PureComponent {
               </div>
             <div className="autoHide" style={{textAlign: 'right', fontSize: '1em'}}>
               <Button  color="#009688" onClick={continueThisTask}>
-                Continute this task <FiCornerRightUp fill="transparent"/>
+                Continue this task <FiCornerRightUp fill="transparent"/>
               </Button>
               <Button color="#aaa" hoverColor='red'><FiTrash2 fill="transparent"/></Button>
             </div>
