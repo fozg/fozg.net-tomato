@@ -123,9 +123,9 @@ export default class UserProvider extends React.Component {
   whenTaskStopDo = () => {
     this.setState({isRunning: false});
       // do something Run out of time
-    this.playSound();
+    // this.playSound();
     notifyMe(`Task "${this.state.taskRunning.taskName}" has end`, () => {
-      this.stopSound();
+      // this.stopSound();
     });
 
     setTimeout(() => {
